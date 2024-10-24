@@ -1,6 +1,6 @@
-import 'package:collection_application/app/auth/signup/signup_screen_controller.dart';
-import 'package:collection_application/custom/buttona/primary_blue_button.dart';
-import 'package:collection_application/custom/buttona/primary_white_button.dart';
+import 'package:collection_application/app/auth/signin/signin_screen_controller.dart';
+import 'package:collection_application/custom/button/primary_blue_button.dart';
+import 'package:collection_application/custom/button/primary_white_button.dart';
 import 'package:collection_application/custom/customTextFieldWithName/custom_text_field_with_name.dart';
 import 'package:collection_application/custom/containers/primary_curved_container.dart';
 import 'package:collection_application/custom/containers/secondary_curved_container.dart';
@@ -16,7 +16,7 @@ class SignInScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignupScreenController());
+    final controller = Get.put(SignInScreenController());
     final responsive = Responsive.instanse;
     return AuthScreenTemp(
       onPressed: controller.toggleAnimation,
@@ -26,14 +26,27 @@ class SignInScreenView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const PrimaryCurvedContainer(
-                padding:
-                    EdgeInsets.only(top: 24, bottom: 60, left: 24, right: 24),
+              PrimaryCurvedContainer(
+                padding: const EdgeInsets.only(
+                    top: 24, bottom: 60, left: 24, right: 24),
                 child: Column(
                   children: [
-                    CustomTextFieldWithName(
-                      name: 'اسم المستخدم',
-                    ),
+                    Obx(() {
+                      return controller.useEmail.value
+                          ? CustomTextFieldWithName(
+                              key: UniqueKey(),
+                              name: 'الإيميل',
+                              keyboardType: TextInputType.emailAddress,
+                            )
+                          : CustomTextFieldWithName(
+                              key: UniqueKey(),
+                              name: 'رقم الهاتف',
+                              keyboardType: TextInputType.phone,
+                            );
+                    }).animate(
+                        autoPlay: false,
+                        effects: controller.fieldChangeEffects,
+                        target: controller.animateText.value ? 1 : 0),
                     SizedBox(height: 8),
                     CustomTextFieldWithName(
                       isPassword: true,
@@ -58,7 +71,7 @@ class SignInScreenView extends StatelessWidget {
                       height: 50,
                       width: 339,
                       child: Text(
-                        'انشاء حساب',
+                        'تسجل الدخول',
                         style: TextStyle(
                           fontFamily: 'TITR',
                           color: AppTheme.appTheme.colorScheme.onPrimary,
@@ -68,16 +81,20 @@ class SignInScreenView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     PrimaryWhiteButton(
+                      onPressed: controller.toggleMethod,
                       height: 50,
                       width: 339,
                       child: Text(
-                        'الإيميل',
+                        controller.useEmail.value ? 'رقم الهاتف' : 'الإيميل',
                         style: TextStyle(
                           fontFamily: 'TITR',
                           color: AppTheme.appTheme.colorScheme.secondary,
                           fontSize: responsive.width(28),
                         ),
-                      ),
+                      ).animate(
+                          autoPlay: false,
+                          effects: controller.textChangeEffects,
+                          target: controller.animateText.value ? 1 : 0),
                     )
                   ],
                 ),

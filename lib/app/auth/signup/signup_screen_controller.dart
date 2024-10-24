@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class SignupScreenController extends GetxController {
   final showContainers = true.obs;
   final useEmail = false.obs;
-  
+  final animateText = false.obs;
 
   final List<Effect> primaryContainerEffects = [
     const SlideEffect(
@@ -24,22 +24,27 @@ class SignupScreenController extends GetxController {
 
   final List<Effect> textChangeEffects = [
     const FadeEffect(
-      duration: Duration(milliseconds: 200),
-      begin: 0,
-      end: 1,
+      duration: Duration(milliseconds: 250),
+      begin: 1,
+      end: 0,
     ),
-    const FadeEffect(
-        duration: Duration(milliseconds: 200),
-        delay: Duration(milliseconds: 200),
-        begin: 1,
-        end: 0)
+  ];
+  final List<Effect> fieldChangeEffects = [
+    const BlurEffect(
+      duration: Duration(milliseconds: 250),
+      begin: Offset(0, 0),
+      end: Offset(0, 2.5),
+    ),
   ];
 
   void toggleAnimation() {
     showContainers.value = !showContainers.value;
   }
 
-  void toggleMethod() {
+  void toggleMethod() async {
+    animateText.value = true;
+    await Future.delayed(textChangeEffects.first.duration!);
     useEmail.value = !useEmail.value;
+    animateText.value = false;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:collection_application/app/auth/authScreen/logo_container.dart';
 import 'package:collection_application/app/auth/signin/signin_screen_view.dart';
 import 'package:collection_application/app/auth/signup/signup_screen_view.dart';
-import 'package:collection_application/custom/buttona/primary_blue_button.dart';
+import 'package:collection_application/custom/button/primary_blue_button.dart';
 import 'package:collection_application/globalControllers/authController/responsive.dart';
 import 'package:collection_application/templates/authBackground/auth_screen_temp.dart';
 import 'package:collection_application/theme/app_theme.dart';

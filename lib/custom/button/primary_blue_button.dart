@@ -1,4 +1,4 @@
-import 'package:collection_application/custom/buttona/general_button.dart';
+import 'package:collection_application/custom/button/general_button.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 
