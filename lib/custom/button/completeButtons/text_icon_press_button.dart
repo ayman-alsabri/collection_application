@@ -1,5 +1,5 @@
 import 'package:collection_application/custom/button/primary_sqare_button.dart';
-import 'package:collection_application/globalControllers/authController/responsive.dart';
+import 'package:collection_application/globalControllers/responsive.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +18,9 @@ class TextIconPressButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive.instanse;
     return Container(
-      width: responsive.width(width),
-      height: responsive.height(30),
+      width: Responsive.width(width),
+      height: Responsive.height(30),
       padding: const EdgeInsets.only(bottom: 3, left: 8, right: 3, top: 3),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -35,7 +34,7 @@ class TextIconPressButton extends StatelessWidget {
             'مسح',
             style: TextStyle(
               fontFamily: 'TITR',
-              fontSize: responsive.width(13),
+              fontSize: Responsive.width(13),
               color: strokeGradientStartColor.withOpacity(0.6),
             ),
           ),

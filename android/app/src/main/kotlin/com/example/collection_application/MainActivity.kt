@@ -1,4 +1,4 @@
-package com.example.collection_application
+package com.collect.date
 
 import io.flutter.embedding.android.FlutterActivity
 

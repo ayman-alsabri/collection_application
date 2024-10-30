@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:collection_application/globalControllers/authController/responsive.dart';
+import 'package:collection_application/globalControllers/responsive.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +13,7 @@ class SecondaryCurvedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive.instanse;
-    return responsive.withHeightPercentage(
+    return Responsive.withHeightPercentage(
       222 / 844,
       Container(
         clipBehavior: Clip.none,
@@ -34,9 +33,9 @@ class SecondaryCurvedContainer extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              top: -(responsive.deviseHeight / 21),
-              height: responsive.height(222),
-              width: responsive.deviseWidth - 32,
+              top: -(Responsive.deviseHeight / 21),
+              height: Responsive.height(222),
+              width: Responsive.deviseWidth - 32,
               child: ClipPath(
                 clipper: SecondaryCurvedContainerClipper(20),
                 child: BackdropFilter(
@@ -61,9 +60,9 @@ class SecondaryCurvedContainer extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: -(responsive.deviseHeight / 21),
-              height: responsive.height(222),
-              width: responsive.deviseWidth - 32,
+              top: -(Responsive.deviseHeight / 21),
+              height: Responsive.height(222),
+              width: Responsive.deviseWidth - 32,
               child: ClipPath(
                 clipper: SecondaryCurvedContainerClipper(20, true),
                 child: Container(
@@ -96,7 +95,7 @@ class SecondaryCurvedContainerClipper extends CustomClipper<Path> {
   final bool _isParent;
   double _padding = 2;
   SecondaryCurvedContainerClipper(this.borderRadius, [this._isParent = false]);
-  final _deviseHeight = Responsive.instanse.deviseHeight;
+  final _deviseHeight = Responsive.deviseHeight;
   // final _deviseWidth = Responsive.instanse.deviseWidth;
   @override
   Path getClip(Size size) {

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:collection_application/globalControllers/authController/responsive.dart';
+import 'package:collection_application/globalControllers/responsive.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +9,11 @@ class LogoContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive.instanse;
+    Responsive.init(context);
     return Container(
-      clipBehavior: Clip.hardEdge,
-      width: responsive.width(250),
-      height: responsive.width(250),
+      clipBehavior: Clip.antiAlias,
+      width: Responsive.width(250),
+      height: Responsive.width(250),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
@@ -37,7 +37,7 @@ class LogoContainer extends StatelessWidget {
               ),
               child: Image.asset(
                 'assets/images/logo.jpg',
-                width: responsive.width(100),
+                width: Responsive.width(100),
               ),
             ),
             const SizedBox(height: 8),
@@ -45,7 +45,7 @@ class LogoContainer extends StatelessWidget {
               'تجميع البيانات',
               style: TextStyle(
                   fontFamily: 'TITR',
-                  fontSize: responsive.width(28),
+                  fontSize: Responsive.width(28),
                   color: bluegradientStartColor),
             ),
             const Expanded(child: SizedBox()),
@@ -53,7 +53,7 @@ class LogoContainer extends StatelessWidget {
               'معا لتطبيق أفضل',
               style: TextStyle(
                   fontFamily: 'TITR',
-                  fontSize: responsive.width(16),
+                  fontSize: Responsive.width(16),
                   color: strokeGradientStartColor.withOpacity(0.7)),
             ),
             const SizedBox(height: 16),

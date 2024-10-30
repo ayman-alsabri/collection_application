@@ -2,7 +2,8 @@ import 'package:collection_application/app/auth/authScreen/logo_container.dart';
 import 'package:collection_application/app/auth/signin/signin_screen_view.dart';
 import 'package:collection_application/app/auth/signup/signup_screen_view.dart';
 import 'package:collection_application/custom/button/primary_blue_button.dart';
-import 'package:collection_application/globalControllers/authController/responsive.dart';
+import 'package:collection_application/globalControllers/authController/auth_controller.dart';
+import 'package:collection_application/globalControllers/responsive.dart';
 import 'package:collection_application/templates/authBackground/auth_screen_temp.dart';
 import 'package:collection_application/theme/app_theme.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
@@ -14,13 +15,14 @@ class AuthscreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive.instanse;
+    Responsive.init(context);
+    Get.put(AuthController());
 
     return AuthScreenTemp(
       body: Column(
         children: [
           SizedBox(
-            height: responsive.height(223),
+            height: Responsive.height(223),
           ),
           const LogoContainer(),
           const Expanded(child: SizedBox()),
@@ -51,7 +53,7 @@ class AuthscreenView extends StatelessWidget {
                   style: TextStyle(
                     color: AppTheme.appTheme.colorScheme.onPrimary,
                     fontFamily: 'TITR',
-                    fontSize: responsive.width(28),
+                    fontSize: Responsive.width(28),
                   ),
                 ),
               ),
@@ -70,7 +72,7 @@ class AuthscreenView extends StatelessWidget {
                   style: TextStyle(
                     color: AppTheme.appTheme.colorScheme.onPrimary,
                     fontFamily: 'TITR',
-                    fontSize: responsive.width(28),
+                    fontSize: Responsive.width(28),
                   ),
                 ),
               ),

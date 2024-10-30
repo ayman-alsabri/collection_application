@@ -2,10 +2,12 @@ import 'package:collection_application/custom/customTextFieldWithName/custom_tex
 import 'package:collection_application/theme/app_theme.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class CustomTextFieldWithName extends StatelessWidget {
   final String name;
+  final List<TextInputFormatter>? inputFormatters;
   final void Function(String)? onSubmitted;
   final void Function(String)? onChanged;
   final void Function()? onTap;
@@ -16,13 +18,14 @@ class CustomTextFieldWithName extends StatelessWidget {
       required this.name,
       this.isPassword = false,
       this.onSubmitted,
+      this.inputFormatters,
       this.onChanged,
       this.onTap,
       this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CustomTextFieldWithNameController());
+    final controller = CustomTextFieldWithNameController();
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +49,7 @@ class CustomTextFieldWithName extends StatelessWidget {
             onChanged: onChanged,
             onTap: onTap,
             keyboardType: keyboardType,
+            inputFormatters: inputFormatters,
             style: const TextStyle(fontFamily: 'TITR'),
             decoration: InputDecoration(
               filled: true, // Enables background color
@@ -65,6 +69,7 @@ class CustomTextFieldWithName extends StatelessWidget {
               onTapOutside: (event) => Get.focusScope?.unfocus(),
               onSubmitted: onSubmitted,
               onChanged: onChanged,
+              inputFormatters: inputFormatters,
               onTap: onTap,
               keyboardType: keyboardType,
               obscureText: (isPassword && controller.hideText.value),

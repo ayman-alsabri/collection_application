@@ -1,4 +1,4 @@
-import 'package:collection_application/globalControllers/authController/responsive.dart';
+import 'package:collection_application/globalControllers/responsive.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -18,9 +18,8 @@ class PrimarySqareButton extends StatefulWidget {
 }
 
 class _PrimarySqareButtonState extends State<PrimarySqareButton> {
-  final _responsive = Responsive.instanse;
-  late final _buttonHeight = _responsive.height(24);
-  late final _buttonWidth = _responsive.height(24);
+  late final _buttonHeight = Responsive.height(24);
+  late final _buttonWidth = Responsive.height(24);
 
   bool _animateTap = false;
   final _animationDuration = const Duration(milliseconds: 150);
@@ -59,7 +58,7 @@ class _PrimarySqareButtonState extends State<PrimarySqareButton> {
             borderRadius: BorderRadius.circular(5),
           ),
           child: TextButton(
-            onPressed:handleTap,
+            onPressed:() => _animateTap?null: handleTap(),
             style: TextButton.styleFrom(
               splashFactory: NoSplash.splashFactory,
               overlayColor: Colors.transparent,

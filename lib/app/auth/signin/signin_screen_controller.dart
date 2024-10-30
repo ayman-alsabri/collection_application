@@ -1,26 +1,24 @@
+import 'package:collection_application/app/auth/signin/components/signin_first_top.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
 class SignInScreenController extends GetxController {
-  final showContainers = true.obs;
+  final showFirstContainers = true.obs;
+  final showSecondContainers = false.obs;
   final useEmail = false.obs;
   final animateText = false.obs;
 
-  final List<Effect> primaryContainerEffects = [
+  String verificationCode = '';
+
+  final List<Effect> secondPageEffects = [
     const SlideEffect(
-        begin: Offset(-1, 0),
+        begin: Offset(0, 3),
         end: Offset(0, 0),
-        curve: Cubic(0.075, 0.4, 0.165, 1.0),
+        curve: Cubic(0.6, 0.04, 0.58, 0.335),
         duration: Duration(milliseconds: 700))
   ];
-  final List<Effect> secondaryContainerEffects = [
-    const SlideEffect(
-        begin: Offset(1, 0),
-        end: Offset(0, 0),
-        curve: Cubic(0.075, 0.4, 0.165, 1.0),
-        duration: Duration(milliseconds: 700))
-  ];
+  
   final List<Effect> textChangeEffects = [
     const FadeEffect(
       duration: Duration(milliseconds: 250),
@@ -36,8 +34,19 @@ class SignInScreenController extends GetxController {
     ),
   ];
 
-  void toggleAnimation() {
-    showContainers.value = !showContainers.value;
+  // void toggleAnimation() {
+  //   showContainers.value = !showContainers.value;
+  // }
+
+    void openSecondPage() async {
+    showFirstContainers.value = false;
+    await Future.delayed(Duration(milliseconds: SigninFirstTop.effects.first.duration!.inMilliseconds-200));
+    showSecondContainers.value = true;
+  }
+  void closeSecondPage() async {
+    showSecondContainers.value = false;
+    await Future.delayed(Duration(milliseconds: SigninFirstTop.effects.first.duration!.inMilliseconds-200));
+    showFirstContainers.value = true;
   }
 
   void toggleMethod() async {

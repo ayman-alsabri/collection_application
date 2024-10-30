@@ -1,4 +1,4 @@
-import 'package:collection_application/globalControllers/authController/responsive.dart';
+import 'package:collection_application/globalControllers/responsive.dart';
 import 'package:flutter/material.dart';
 
 class GeneralButton extends StatefulWidget {
@@ -6,7 +6,6 @@ class GeneralButton extends StatefulWidget {
   final List<Color> colors;
   final double width;
   final double height;
-  final double backgroundOpacity;
   final Widget child;
   final List<BoxShadow> shadows;
 
@@ -17,7 +16,6 @@ class GeneralButton extends StatefulWidget {
     required this.width,
     required this.colors,
     required this.child,
-    this.backgroundOpacity = 1,
     this.shadows = const [
       BoxShadow(
         color: Colors.black26,
@@ -32,9 +30,8 @@ class GeneralButton extends StatefulWidget {
 }
 
 class _GeneralButtonState extends State<GeneralButton> {
-  final _responsive = Responsive.instanse;
-  late final _buttonWidth = _responsive.width(widget.width);
-  late final _buttonHeight = _responsive.height(widget.height);
+  late final _buttonWidth = Responsive.width(widget.width);
+  late final _buttonHeight = Responsive.height(widget.height);
   bool _animateTap = false;
   final _animationDuration = const Duration(milliseconds: 150);
 
@@ -71,7 +68,7 @@ class _GeneralButtonState extends State<GeneralButton> {
         boxShadow: _animateTap ? null : widget.shadows,
       ),
       child: TextButton(
-          onPressed: handleTap,
+          onPressed:() => _animateTap?null: handleTap(),
           style: TextButton.styleFrom(
             splashFactory: NoSplash.splashFactory,
             overlayColor: Colors.transparent,

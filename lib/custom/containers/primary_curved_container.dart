@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:collection_application/globalControllers/authController/responsive.dart';
+import 'package:collection_application/globalControllers/responsive.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +12,7 @@ class PrimaryCurvedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive.instanse;
-    return responsive.withHeightPercentage(
+    return Responsive.withHeightPercentage(
       270 / 844,
       Container(
         clipBehavior: Clip.hardEdge,
@@ -85,7 +84,7 @@ class PrimaryCurvedContainerClipper extends CustomClipper<Path> {
   final bool _isParent;
   double _padding = 2;
   PrimaryCurvedContainerClipper(this.borderRadius, [this._isParent = false]);
-  final _deviseHeight = Responsive.instanse.deviseHeight;
+  final _deviseHeight = Responsive.deviseHeight;
   // final _deviseWidth = Responsive.instanse.deviseWidth;
   @override
   Path getClip(Size size) {
