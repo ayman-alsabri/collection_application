@@ -1,6 +1,6 @@
 import 'package:collection_application/custom/button/completeButtons/confirmation_buttons.dart';
-import 'package:collection_application/custom/dialog/general_dialog.dart';
-import 'package:collection_application/globalControllers/responsive.dart';
+import 'package:collection_application/templates/dialog/general_dialog.dart';
+import 'package:collection_application/app/globalControllers/responsive.dart';
 import 'package:flutter/material.dart';
 
 class DialogWithConfirmationOnly extends StatelessWidget {

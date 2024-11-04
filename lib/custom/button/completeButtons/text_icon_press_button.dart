@@ -1,5 +1,5 @@
-import 'package:collection_application/custom/button/primary_sqare_button.dart';
-import 'package:collection_application/globalControllers/responsive.dart';
+import 'package:collection_application/custom/button/blue_sqare_button.dart';
+import 'package:collection_application/app/globalControllers/responsive.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 
@@ -25,10 +25,16 @@ class TextIconPressButton extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: bottomGradientStartColor.withOpacity(0.7)),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          PrimarySqareButton(
+          BlueSqareButton(
+            shadows: null,
+            buttonSize: 24,
+            borderRadius: 5,
+            strokeOpacity: 0.6,
             iconName: iconName,
+            onPressed: onPressed,
           ),
           Text(
             'مسح',

@@ -1,10 +1,10 @@
-import 'package:collection_application/globalControllers/responsive.dart';
+import 'package:collection_application/app/globalControllers/responsive.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Future<void> showCustomSnackBar(String title, String subtitle,
-    {Duration duration = const Duration(milliseconds: 1700)}) async {
+    {Duration duration = const Duration(milliseconds: 2200)}) async {
   Get.closeCurrentSnackbar();
   Get.snackbar(
     duration: duration,

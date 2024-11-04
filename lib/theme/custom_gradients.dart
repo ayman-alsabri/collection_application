@@ -21,3 +21,6 @@ const Color cravedButtonTopShadow = Color(0xFF202633);
 const Color cravedButtonButtomShadow = Color(0xFF364055);
 
 final Color emailButtonColor = Colors.white.withOpacity(0.9);
+
+const Color searchBarTopShadow = Color(0xFF11161E);
+const Color searchBarBottomShadow = Color(0xFF2B3545);

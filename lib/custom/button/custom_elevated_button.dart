@@ -1,7 +1,6 @@
-import 'package:collection_application/globalControllers/responsive.dart';
+import 'package:collection_application/app/globalControllers/responsive.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
-
 
 class CustomElevatedButton extends StatefulWidget {
   final void Function()? onPressed;
@@ -25,14 +24,14 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
   late final _buttonWidth = Responsive.width(widget.width);
   late final _buttonHeight = Responsive.height(widget.height);
   bool _animateTap = false;
-  final _animationDuration = const Duration(milliseconds: 150);
+  final _animationDuration = const Duration(milliseconds: 250);
 
   void handleTap() async {
     setState(() {
       _animateTap = true;
     });
     await Future.delayed(
-        Duration(milliseconds: _animationDuration.inMilliseconds + 100));
+        Duration(milliseconds: _animationDuration.inMilliseconds + 50));
     if (widget.onPressed != null) {
       widget.onPressed!();
     }
@@ -44,8 +43,8 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      padding: EdgeInsets.all(7),
-      curve: Curves.linear,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      curve: Curves.easeOut,
       margin: EdgeInsets.symmetric(
         vertical: _buttonHeight * (_animateTap ? 0.01 : 0),
         horizontal: _buttonWidth * (_animateTap ? 0.01 : 0),
@@ -60,10 +59,8 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: _animateTap
             ? [
-                const BoxShadow(
-                  color: Color.fromRGBO(32, 38, 51, 0.1),
-                  // offset: Offset(3, 3),
-                  // blurRadius: 10
+                BoxShadow(
+                  color: cravedButtonTopShadow.withOpacity(0.1),
                 ),
                 BoxShadow(
                     color: cravedButtonButtomShadow.withOpacity(0.7),
@@ -92,7 +89,8 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
           alignment: Alignment.center,
           padding: const EdgeInsets.all(0),
         ),
-        child: FittedBox(fit: BoxFit.contain,
+        child: FittedBox(
+          fit: BoxFit.contain,
           child: Text(
             widget.text,
             style: TextStyle(
@@ -105,49 +103,3 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
     );
   }
 }
-
-
-// class CustomElevatedButton extends StatefulWidget {
-//   final double height;
-//   final double width;
-//   final String text;
-//   const CustomElevatedButton(
-//       {super.key,
-//       required this.height,
-//       required this.width,
-//       required this.text});
-
-//   @override
-//   State<CustomElevatedButton> createState() => _CustomElevatedButtonState();
-// }
-
-// class _CustomElevatedButtonState extends State<CustomElevatedButton> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return CustomElevatedButton(
-//         height: widget.height,
-//         width: widget.width,
-//         colors: const [elevatedButtonColor, elevatedButtonColor],
-//         shadows: const [
-//           BoxShadow(
-//             color: elevatedButtonTopShadow,
-//             offset: Offset(-3, -3),
-//             blurRadius: 10
-//           ),
-//           BoxShadow(
-//               color: elevatedButtonButtomShadow,
-//               offset: Offset(3, 3),
-//               blurRadius: 10)
-//         ],
-//         child: FittedBox(
-//           fit: BoxFit.scaleDown,
-//           child: Text(
-//             widget.text,
-//             style: TextStyle(
-//                 color: bluegradientStartColor,
-//                 fontFamily: 'SF MADA',
-//                 fontSize: Responsive.width(20)),
-//           ),
-//         ));
-//   }
-// }

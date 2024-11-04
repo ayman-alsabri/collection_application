@@ -1,4 +1,4 @@
-import 'package:collection_application/globalControllers/responsive.dart';
+import 'package:collection_application/app/globalControllers/responsive.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreenTemp extends StatelessWidget {
