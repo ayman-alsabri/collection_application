@@ -5,16 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class GeneralBottomSheet extends StatefulWidget {
-  final Widget? child;
   final String firstButtonName;
   final String secondButtonName;
-  final void Function(int index)? onTap;
+  final Widget firstField;
+  final Widget secondField;
+  final Future<void> Function(int index)? onTap;
 
   const GeneralBottomSheet({
     super.key,
-    this.child,
     required this.firstButtonName,
     required this.secondButtonName,
+    required this.firstField,
+    required this.secondField,
     this.onTap,
   });
 
@@ -30,15 +32,19 @@ class _GeneralBottomSheetState extends State<GeneralBottomSheet> {
   Future<void> _onTap(int index) async {
     if (_animate) return;
 
+    if (widget.onTap != null) {
+      try {
+        await widget.onTap!(index);
+      } catch (e) {
+        return;
+      }
+    }
     setState(() {
       _animate = true;
       _focusedIndex = index;
     });
 
     await Future.delayed(_animationDuration);
-    if (widget.onTap != null) {
-      widget.onTap!(index);
-    }
 
     setState(() {
       _animate = false;
@@ -47,7 +53,8 @@ class _GeneralBottomSheetState extends State<GeneralBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height:  Responsive.height(450),
+    return SizedBox(
+      height: Responsive.height(450),
       child: Stack(
         children: [
           Container(
@@ -66,7 +73,9 @@ class _GeneralBottomSheetState extends State<GeneralBottomSheet> {
               ),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black26, offset: Offset(0, -20), blurRadius: 40)
+                    color: Colors.black26,
+                    offset: Offset(0, -20),
+                    blurRadius: 40)
               ],
             ),
             child: Column(
@@ -82,7 +91,26 @@ class _GeneralBottomSheetState extends State<GeneralBottomSheet> {
                     ],
                   ),
                 ),
-                Expanded(child: widget.child ?? const SizedBox())
+                Expanded(
+                  child: Stack(
+                    children: [
+                      widget.firstField
+                          .animate(target: _focusedIndex == 0 ? 1 : 0)
+                          .moveX(
+                              curve: Curves.easeInOut,
+                              begin: Responsive.deviseWidth,
+                              end: 0,
+                              duration: _animationDuration),
+                      widget.secondField
+                          .animate(target: _focusedIndex == 1 ? 1 : 0)
+                          .moveX(
+                              curve: Curves.easeInOut,
+                              begin: -Responsive.deviseWidth,
+                              end: 0,
+                              duration: _animationDuration),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -145,17 +173,17 @@ class _GeneralBottomSheetState extends State<GeneralBottomSheet> {
           child: Text(
             index == 0 ? widget.firstButtonName : widget.secondButtonName,
             style: TextStyle(
-              fontFamily: 'TITR',
-              fontSize: Responsive.width(15),height: 2
-            ),
+                fontFamily: 'TITR', fontSize: Responsive.width(15), height: 2),
           ).animate(target: isFocused ? 1 : 0).custom(
             builder: (context, value, child) {
-              final color1 =
-                  ColorTween(begin: bluegradientStartColor, end: Colors.white.withOpacity(0.6))
-                      .transform(value)!;
-              final color2 =
-                  ColorTween(begin: bluegradientEndColor, end: Colors.white.withOpacity(0.6))
-                      .transform(value)!;
+              final color1 = ColorTween(
+                      begin: bluegradientStartColor,
+                      end: Colors.white.withOpacity(0.6))
+                  .transform(value)!;
+              final color2 = ColorTween(
+                      begin: bluegradientEndColor,
+                      end: Colors.white.withOpacity(0.6))
+                  .transform(value)!;
 
               return ShaderMask(
                   shaderCallback: (bounds) => LinearGradient(

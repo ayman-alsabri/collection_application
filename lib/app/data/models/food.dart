@@ -9,26 +9,28 @@ const _fatPer100g = 'fat';
 const _foodCategory = 'category';
 const _isMine = 'isMine';
 
-class Food {
+base class Food {
   final int id;
   final String name;
   final String? category;
   final bool isMine;
   int caloriePer100g;
-  int protine;
-  int carbs;
-  int fat;
+  double protine;
+  double carbs;
+  double fat;
   List<Unit> units;
-  Food(
-      {required this.id,
-      required this.name,
-      required this.caloriePer100g,
-      required this.protine,
-      required this.carbs,
-      required this.fat,
-      this.isMine = true,
-      this.category,
-      required this.units});
+
+  Food({
+    required this.id,
+    required this.name,
+    required this.caloriePer100g,
+    required this.protine,
+    required this.carbs,
+    required this.fat,
+    required this.units,
+    this.isMine = true,
+    this.category,
+  });
 
   Food.fromJson(Map<String, dynamic> food, List<Map<String, dynamic>> units)
       : id = food[_foodId],
@@ -44,4 +46,15 @@ class Food {
               (e) => Unit.fromJson(e),
             )
             .toList();
+
+  Food.fromFood(Food food)
+      : id = food.id,
+        name = food.name,
+        caloriePer100g = food.caloriePer100g,
+        isMine = food.isMine,
+        protine = food.protine,
+        fat = food.fat,
+        carbs = food.carbs,
+        category = food.category,
+        units = food.units;
 }

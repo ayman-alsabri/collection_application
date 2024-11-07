@@ -1,17 +1,25 @@
 import 'package:collection_application/app/globalControllers/responsive.dart';
-import 'package:collection_application/app/views/home/bottomSheet/input_text_field.dart';
+import 'package:collection_application/app/views/home/bottomSheet/widgets/input_text_field.dart';
 import 'package:flutter/material.dart';
 
-class NutritionalValueContainer extends StatelessWidget {
-  final void Function(String name)? onNameChanged;
-  const NutritionalValueContainer({super.key, required this.onNameChanged});
+class NutritionalValueField extends StatelessWidget {
+  final void Function({
+    String? name,
+    String? calories,
+    String? protine,
+    String? carb,
+    String? fat,
+    String? notes,
+  }) onValueChanges;
+  const NutritionalValueField({super.key, required this.onValueChanges});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 26),
       child: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "الاسم",
@@ -22,7 +30,7 @@ class NutritionalValueContainer extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             InputTextField(
-              onChanged: onNameChanged,
+              onChanged: (p0) => onValueChanges(name: p0),
               hintText: '',
               numeric: false,
             ),
@@ -36,23 +44,29 @@ class NutritionalValueContainer extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             InputTextField(
-              onChanged: onNameChanged,
+              onChanged: (p0) => onValueChanges(calories: p0),
               hintText: 'السعرات',
             ),
             const SizedBox(height: 8),
             InputTextField(
-              onChanged: onNameChanged,
+              onChanged: (p0) => onValueChanges(protine: p0),
               hintText: 'البروتين',
             ),
             const SizedBox(height: 8),
             InputTextField(
-              onChanged: onNameChanged,
+              onChanged: (p0) => onValueChanges(carb: p0),
               hintText: 'الكارب',
             ),
             const SizedBox(height: 8),
             InputTextField(
-              onChanged: onNameChanged,
+              onChanged: (p0) => onValueChanges(fat: p0),
               hintText: 'الدهون',
+            ),
+            const SizedBox(height: 8),
+            InputTextField(
+              onChanged: (p0) => onValueChanges(notes: p0),
+              hintText: 'الفئة',
+              numeric: false,
             ),
             const SizedBox(height: 32),
           ],

@@ -48,14 +48,7 @@ class VerificationCodeContainer extends StatelessWidget {
                 onPressed: onTap,
                 height: 50,
                 width: 202,
-                child: Text(
-                  'متابعة',
-                  style: TextStyle(
-                    fontFamily: 'TITR',
-                    fontSize: Responsive.width(28),
-                    color: strokeGradientStartColor,
-                  ),
-                ),
+                text: 'متابعة',
               ),
             )
           ],

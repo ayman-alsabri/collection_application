@@ -1,4 +1,6 @@
+import 'package:collection_application/app/globalControllers/responsive.dart';
 import 'package:collection_application/templates/buttons/general_button.dart';
+import 'package:collection_application/theme/app_theme.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +9,7 @@ class PrimaryBlueButton extends StatelessWidget {
   final double width;
   final double height;
   final double backgroundOpacity;
-  final Widget child;
+  final String text;
   final List<BoxShadow> shadows;
 
   const PrimaryBlueButton({
@@ -15,7 +17,7 @@ class PrimaryBlueButton extends StatelessWidget {
     this.onPressed,
     required this.height,
     required this.width,
-    required this.child,
+    required this.text,
     this.backgroundOpacity = 1,
     this.shadows = const [
       BoxShadow(
@@ -36,7 +38,14 @@ class PrimaryBlueButton extends StatelessWidget {
         bluegradientEndColor.withOpacity(backgroundOpacity),
       ],
       onPressed: onPressed,
-      child: child,
+      child: Text(
+        text,
+        style: TextStyle(
+          fontFamily: 'TITR',
+          color: AppTheme.appTheme.colorScheme.onPrimary,
+          fontSize: Responsive.height(28),
+        ),
+      ),
     );
   }
 }

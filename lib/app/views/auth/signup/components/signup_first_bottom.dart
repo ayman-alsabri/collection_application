@@ -40,14 +40,7 @@ class SignupFirstBottom extends StatelessWidget {
                       : null,
                   height: 50,
                   width: 202,
-                  child: Text(
-                    'انشاء حساب',
-                    style: TextStyle(
-                      fontFamily: 'TITR',
-                      color: AppTheme.appTheme.colorScheme.onPrimary,
-                      fontSize: Responsive.height(28),
-                    ),
-                  ),
+                  text: 'انشاء حساب',
                 );
               }),
               const SizedBox(height: 16),

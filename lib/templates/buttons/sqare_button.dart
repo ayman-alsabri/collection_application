@@ -59,7 +59,6 @@ class _SqareButtonState extends State<SqareButton> {
           duration: _animationDuration,
           height: _buttonHeight * (_animateTap ? 0.97 : 1),
           width: _buttonWidth * (_animateTap ? 0.97 : 1),
-          padding: const EdgeInsets.symmetric(horizontal: 4.5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(widget.borderRadius),
               gradient: LinearGradient(
@@ -76,8 +75,11 @@ class _SqareButtonState extends State<SqareButton> {
               alignment: Alignment.center,
               padding: const EdgeInsets.all(0),
             ),
-            child: SizedBox(
-              child: widget.child,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.5),
+              child: SizedBox.expand(
+                child: widget.child,
+              ),
             ),
           ),
         ),

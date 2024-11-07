@@ -6,8 +6,10 @@ import 'package:collection_application/custom/button/blue_sqare_button.dart';
 import 'package:collection_application/custom/button/completeButtons/custom_search_bar.dart';
 import 'package:collection_application/custom/button/grey_sqare_button.dart';
 import 'package:collection_application/custom/topSwipers/threeSwipers/three_swipers.dart';
+import 'package:collection_application/custom/topSwipers/threeSwipers/three_swipers_controllers.dart';
 import 'package:collection_application/templates/homeBackground/home_screen_template.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreenView extends StatelessWidget {
   const HomeScreenView({super.key});
@@ -16,7 +18,7 @@ class HomeScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // late final controller = Get.put(ThreeSwipersControllers());
+    Get.put(ThreeSwipersControllers());
     return const HomeScreenTemplate(
       floatingActionButton: CustomFloatingActionButton(
         bottomSheet: BottomSheetView(),

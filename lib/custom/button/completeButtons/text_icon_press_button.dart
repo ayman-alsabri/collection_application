@@ -28,6 +28,19 @@ class TextIconPressButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontFamily: 'TITR',
+                  fontSize: Responsive.width(13),
+                  color: strokeGradientStartColor.withOpacity(0.6),
+                ),
+              ),
+            ),
+          ),
           BlueSqareButton(
             shadows: null,
             buttonSize: 24,
@@ -35,14 +48,6 @@ class TextIconPressButton extends StatelessWidget {
             strokeOpacity: 0.6,
             iconName: iconName,
             onPressed: onPressed,
-          ),
-          Text(
-            'مسح',
-            style: TextStyle(
-              fontFamily: 'TITR',
-              fontSize: Responsive.width(13),
-              color: strokeGradientStartColor.withOpacity(0.6),
-            ),
           ),
         ],
       ),

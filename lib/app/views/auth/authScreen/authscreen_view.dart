@@ -48,14 +48,7 @@ class AuthscreenView extends StatelessWidget {
                 ],
                 height: 50,
                 width: 371,
-                child: Text(
-                  'لنبدأ',
-                  style: TextStyle(
-                    color: AppTheme.appTheme.colorScheme.onPrimary,
-                    fontFamily: 'TITR',
-                    fontSize: Responsive.width(28),
-                  ),
-                ),
+                text: 'لنبدأ',
               ),
               const SizedBox(height: 16),
               PrimaryBlueButton(
@@ -67,14 +60,7 @@ class AuthscreenView extends StatelessWidget {
                 backgroundOpacity: 0.1,
                 height: 50,
                 width: 371,
-                child: Text(
-                  'لدي حساب بالفعل',
-                  style: TextStyle(
-                    color: AppTheme.appTheme.colorScheme.onPrimary,
-                    fontFamily: 'TITR',
-                    fontSize: Responsive.width(28),
-                  ),
-                ),
+                text: 'لدي حساب بالفعل',
               ),
               const SizedBox(height: 32),
             ],

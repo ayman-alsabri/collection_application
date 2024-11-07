@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDataHelper {
   final _name = 'userName';
+  final _email = 'email';
   final _points = 'points';
 
   factory UserDataHelper() => _instance;
@@ -20,12 +21,20 @@ class UserDataHelper {
     return (await prefs).getString(_name);
   }
 
+  Future<bool> storeEmail(String email) async {
+    return (await prefs).setString(_email, email);
+  }
+
+  Future<String?> getEmail() async {
+    return (await prefs).getString(_email);
+  }
+
   Future<bool> addPoints(int points) async {
     final previousPoints = (await prefs).getInt(_points) ?? 0;
     return (await prefs).setInt(_points, previousPoints + points);
   }
 
   Future<int> getPoints() async {
-    return (await prefs).getInt(_points)??0;
+    return (await prefs).getInt(_points) ?? 0;
   }
 }

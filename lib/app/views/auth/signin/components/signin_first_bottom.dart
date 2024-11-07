@@ -9,7 +9,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
 class SigninFirstBottom extends StatelessWidget {
-  static   final List<Effect> effects = [
+  static final List<Effect> effects = [
     const SlideEffect(
         begin: Offset(1, 0),
         end: Offset(0, 0),
@@ -27,17 +27,11 @@ class SigninFirstBottom extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          PrimaryBlueButton(onPressed: controller.openSecondPage,
+          PrimaryBlueButton(
+            onPressed: controller.openSecondPage,
             height: 50,
             width: 339,
-            child: Text(
-              'تسجل الدخول',
-              style: TextStyle(
-                fontFamily: 'TITR',
-                color: AppTheme.appTheme.colorScheme.onPrimary,
-                fontSize: Responsive.height(28),
-              ),
-            ),
+            text: 'تسجل الدخول',
           ),
           const SizedBox(height: 16),
           PrimaryWhiteButton(

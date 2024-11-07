@@ -19,8 +19,11 @@ class CustomFloatingActionButton extends StatelessWidget {
       iconName: 'add.png',
       padding: 15,
       buttonSize: 55,
-      onPressed: () =>
-          Get.bottomSheet(bottomSheet, barrierColor: Colors.transparent,isScrollControlled: true,ignoreSafeArea: true),
+      onPressed: () => Get.bottomSheet(
+        bottomSheet,
+        barrierColor: Colors.transparent,
+        isScrollControlled: true,
+      ),
     );
   }
 }
