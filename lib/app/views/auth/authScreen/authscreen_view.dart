@@ -5,7 +5,6 @@ import 'package:collection_application/custom/button/primary_blue_button.dart';
 import 'package:collection_application/app/globalControllers/authController/auth_controller.dart';
 import 'package:collection_application/app/globalControllers/responsive.dart';
 import 'package:collection_application/templates/authBackground/auth_screen_temp.dart';
-import 'package:collection_application/theme/app_theme.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

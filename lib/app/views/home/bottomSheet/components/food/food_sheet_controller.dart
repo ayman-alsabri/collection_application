@@ -1,7 +1,6 @@
 import 'package:collection_application/app/data/models/food.dart';
 import 'package:collection_application/app/data/models/unit.dart';
 import 'package:collection_application/app/globalControllers/dataController/data_controller.dart';
-import 'package:collection_application/app/views/home/bottomSheet/components/food/widgets/food_units_adder.dart';
 import 'package:collection_application/app/views/home/bottomSheet/components/food/widgets/food_units_adder_controller.dart';
 import 'package:collection_application/custom/dialog/waiting_dialog.dart';
 import 'package:collection_application/custom/snackBar/custom_snack_bar.dart';
