@@ -1,24 +1,26 @@
 import 'package:collection_application/app/globalControllers/dataController/data_controller.dart';
 import 'package:collection_application/app/views/auth/authScreen/authscreen_view.dart';
 import 'package:collection_application/app/views/home/home_screen_view.dart';
-import 'package:collection_application/app/data/firestore/firestore_helper.dart';
-import 'package:collection_application/custom/topSwipers/threeSwipers/three_swipers_controllers.dart';
 import 'package:collection_application/theme/app_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
 void main() async {
+  await dotenv.load(fileName: ".env");
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   WidgetsFlutterBinding.ensureInitialized();
+  final apiKey = dotenv.env['API_KEY'];
+  final appId = dotenv.env['APP_ID'];
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyCyIAVQM8-oa-mS96uzgukoqm56yevsg8o",
-          appId: "1:359449937248:android:c4546a21b4f328464fca05",
+      options: FirebaseOptions(
+          apiKey: apiKey!,
+          appId: appId!,
           messagingSenderId: "359449937248",
           projectId: "data-collection-97956"));
 
