@@ -1,19 +1,23 @@
 import 'package:collection_application/app/data/models/product.dart';
 import 'package:collection_application/app/data/models/unit.dart';
 import 'package:collection_application/app/globalControllers/dataController/data_controller.dart';
+import 'package:collection_application/app/views/home/bottomSheet/components/food/widgets/food_units_adder_controller.dart';
 import 'package:collection_application/custom/dialog/waiting_dialog.dart';
 import 'package:collection_application/custom/snackBar/custom_snack_bar.dart';
 import 'package:get/get.dart';
 
 class ProductsSheetController extends GetxController {
   final DataController _dataController = Get.find();
+  final _unitsAdderController = Get.put(FoodUnitsAdderController());
+
+  final List<Unit> _units = [];
 
   final productName = ''.obs;
   String _caloriesPer100g = '';
   String _protinePer100g = '';
   String _carbPer100g = '';
   String _fatPer100g = '';
-  String _notes = '';
+  String _notes = 'لا شيء';
 
   String _barcode = '';
   String _weightInGram = '';
@@ -27,22 +31,26 @@ class ProductsSheetController extends GetxController {
       showCustomSnackBar('خطأ', 'يرجى تعبئة البيانات كاملةً');
       return;
     }
+    try {
+      _setUnits(_unitsAdderController.getUnits);
+    } catch (e) {
+      return;
+    }
+
     WaitingDialog.show();
     final successful = await _dataController.addProduct(Product(
-        id: 0,
-        name: productName.value,
-        caloriePer100g: int.parse(_caloriesPer100g),
-        barCode: _barcode,
-        protine: double.parse(_protinePer100g),
-        carbs: double.parse(_carbPer100g),
-        fat: double.parse(_fatPer100g),
-        category: _notes,
-        isMine: true,
-        units: [
-          Unit(id: 0, name: 'وحدة', weight: double.parse(_weightInGram))
-        ]));
+      id: 0,
+      name: productName.value,
+      caloriePer100g: int.parse(_caloriesPer100g),
+      barCode: _barcode,
+      protine: double.parse(_protinePer100g),
+      carbs: double.parse(_carbPer100g),
+      fat: double.parse(_fatPer100g),
+      category: _notes == 'لا شيء' ? null : _notes,
+      isMine: true,
+      units: _units,
+    ));
     WaitingDialog.hide();
-    //TODO: handle error with custom error class
     if (!successful) {
       showCustomSnackBar('لا يوجد اتصال بالانترنت',
           "الرجاء الاتصال بالانترنت والمحاولة لاحقاَ");
@@ -65,7 +73,7 @@ class ProductsSheetController extends GetxController {
     _protinePer100g = protine?.trim() ?? _protinePer100g;
     _carbPer100g = carb?.trim() ?? _carbPer100g;
     _fatPer100g = fat?.trim() ?? _fatPer100g;
-    _notes = notes?.trim() ?? _notes;
+    _notes = notes ?? _notes;
   }
 
   void setBarcodeValues({String? barCode, String? weight}) {
@@ -111,5 +119,15 @@ class ProductsSheetController extends GetxController {
 
   Future<void> _toFirstSection() async {
     currentFormIndex.value = 0;
+  }
+
+  void _setUnits(List<Map<String, String>> rawUnits) {
+    for (var rawUnit in rawUnits) {
+      final double weightInGram =
+          (double.parse(rawUnit['calories']!) / int.parse(_caloriesPer100g)) *
+              100;
+      _units.add(Unit(id: 0, name: rawUnit['name']!, weight: weightInGram));
+    }
+    _units.add(Unit(id: 0, name: 'وحدة', weight: double.parse(_weightInGram)));
   }
 }

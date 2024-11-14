@@ -1,4 +1,125 @@
+import 'package:collection_application/app/data/models/meal.dart';
+import 'package:collection_application/app/data/models/unit.dart';
+import 'package:collection_application/app/globalControllers/dataController/data_controller.dart';
+import 'package:collection_application/app/views/home/bottomSheet/components/food/widgets/food_units_adder_controller.dart';
+import 'package:collection_application/app/views/home/bottomSheet/components/meals/widgets/ingrediant_adder_controller.dart';
+import 'package:collection_application/custom/dialog/waiting_dialog.dart';
+import 'package:collection_application/custom/snackBar/custom_snack_bar.dart';
 import 'package:get/get.dart';
 
-class MealsSheetController extends GetxController{
+class MealsSheetController extends GetxController {
+  final DataController _dataController = Get.find();
+  final _ingrediantsAdderController = Get.put(IngrediantAdderController());
+  final _unitsAdderController = Get.put(FoodUnitsAdderController());
+
+  final List<Unit> _units = [];
+  final List<Ingrediant> _ingrediants = [];
+
+  String _foodtName = '';
+  String _caloriesPer100g = '';
+  String _protinePer100g = '';
+  String _carbPer100g = '';
+  String _fatPer100g = '';
+  String _notes = 'لا شيء';
+
+  final currentFormIndex = 0.obs;
+
+  Future submit() async {
+    try {
+      _setUnits(_unitsAdderController.getUnits);
+      _setIngrediants(_ingrediantsAdderController.getIngrediants);
+    } catch (e) {
+      return;
+    }
+
+    WaitingDialog.show('يرجى الانتظار\nيتم رفع الوجبة للسيرفر...');
+    final successful = await _dataController.addMeal(Meal(
+        id: 0,
+        name: _foodtName,
+        caloriePer100g: int.parse(_caloriesPer100g),
+        protine: double.parse(_protinePer100g),
+        carbs: double.parse(_carbPer100g),
+        fat: double.parse(_fatPer100g),
+        category: _notes =='لا شيء'?null:_notes,
+        isMine: true,
+        units: _units,
+        ingrediants: _ingrediants));
+    WaitingDialog.hide();
+    if (!successful) {
+      showCustomSnackBar('لا يوجد اتصال بالانترنت',
+          "الرجاء الاتصال بالانترنت والمحاولة لاحقاَ");
+      return;
+    }
+
+    Get.back();
+  }
+
+  void setNutritionalValues({
+    String? calories,
+    String? carb,
+    String? fat,
+    String? name,
+    String? protine,
+    String? notes,
+  }) {
+    _foodtName = name?.trim() ?? _foodtName;
+    _caloriesPer100g = calories?.trim() ?? _caloriesPer100g;
+    _protinePer100g = protine?.trim() ?? _protinePer100g;
+    _carbPer100g = carb?.trim() ?? _carbPer100g;
+    _fatPer100g = fat?.trim() ?? _fatPer100g;
+    _notes = notes??_notes;
+  }
+
+  Future<void> onTap(int index) async {
+    if (index == currentFormIndex.value) return;
+
+    try {
+      if (index == 1) {
+        await _toSecondSection();
+        return;
+      }
+
+      await _toFirstSection();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> _toSecondSection() async {
+    final nutritionalValues = [
+      _caloriesPer100g,
+      _protinePer100g,
+      _carbPer100g,
+      _fatPer100g
+    ];
+
+    if (_foodtName.isEmpty) {
+      await showCustomSnackBar('خطأ', 'يرجى كتابة اسم الوجبة أولا');
+      throw Error();
+    }
+    if (nutritionalValues.any(
+      (element) => element.isEmpty,
+    )) {
+      await showCustomSnackBar('خطأ', 'يرجى كتابة القيم الغذائية كاملةً');
+      throw Error();
+    }
+    currentFormIndex.value = 1;
+  }
+
+  Future<void> _toFirstSection() async {
+    currentFormIndex.value = 0;
+  }
+
+  void _setUnits(List<Map<String, String>> rawUnits) {
+    for (var rawUnit in rawUnits) {
+      final double weightInGram =
+          (double.parse(rawUnit['calories']!) / int.parse(_caloriesPer100g)) *
+              100;
+      _units.add(Unit(id: 0, name: rawUnit['name']!, weight: weightInGram));
+    }
+  }
+
+  void _setIngrediants(List<Ingrediant> rawData) {
+    _ingrediants.addAll(rawData);
+  }
 }

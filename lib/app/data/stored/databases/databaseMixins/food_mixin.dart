@@ -24,7 +24,7 @@ mixin FoodMixin {
     await db.execute('''
       CREATE TABLE $foodTableName (
         $foodId INTEGER PRIMARY KEY AUTOINCREMENT,
-        $name TEXT NOT NULL,
+        $name TEXT NOT NULL UNIQUE,
         $foodType TEXT NOT NULL,
         $foodCategory TEXT,
         $caloriesPer100g INTEGER NOT NULL,

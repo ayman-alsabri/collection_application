@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class WaitingDialog extends StatelessWidget {
-  const WaitingDialog({super.key});
+  final String message;
+  const WaitingDialog({super.key, required this.message});
 
   static bool _isShown = false;
 
@@ -25,7 +26,7 @@ class WaitingDialog extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'يرجى الانتظار...',
+                  message,
                   style: TextStyle(
                       fontFamily: 'SF MADA', fontSize: Responsive.width(25)),
                 ),
@@ -48,15 +49,16 @@ class WaitingDialog extends StatelessWidget {
     );
   }
 
-  static void show() {
+  static void show([String message = 'يرجى الانتظار...']) {
     if (_isShown) return;
     Get.generalDialog(
       barrierColor: Colors.transparent,
       barrierDismissible: false,
       transitionDuration: WaitingDialog.transitionDuration,
       transitionBuilder: WaitingDialog.transitionBuilder,
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const WaitingDialog(),
+      pageBuilder: (context, animation, secondaryAnimation) => WaitingDialog(
+        message: message,
+      ),
     );
     _isShown = true;
   }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ConfirmationButtons extends StatelessWidget {
   final String confirmText;
-  final void Function()? onConfirmed;
+  final Future<void> Function()? onConfirmed;
   final String cancelText;
   final void Function()? onCanceled;
   const ConfirmationButtons({
@@ -30,7 +30,7 @@ class ConfirmationButtons extends StatelessWidget {
           height: Responsive.height(39),
           width: Responsive.width(115),
           text: cancelText,
-          onPressed: onCanceled,
+          onPressed: () async => (onCanceled??(){})(),
         ),
       ],
     );

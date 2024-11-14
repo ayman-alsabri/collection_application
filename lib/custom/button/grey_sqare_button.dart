@@ -11,6 +11,7 @@ class GreySqareButton extends StatelessWidget {
   final List<BoxShadow>? shadows;
   final double? buttonSize;
   final double borderRadius;
+  final Duration animationDuration;
   final void Function()? onPressed;
 
   const GreySqareButton({
@@ -21,6 +22,7 @@ class GreySqareButton extends StatelessWidget {
     this.borderRadius = 10,
     this.strokeOpacity = 0.1,
     this.padding = 0,
+    this.animationDuration = const Duration(milliseconds: 150),
     this.shadows = const [
       BoxShadow(
         color: Colors.black26,
@@ -33,6 +35,7 @@ class GreySqareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SqareButton(
+      animationDuration: animationDuration,
       shadows: shadows,
       onPressed: onPressed,
       strokeOpacity: strokeOpacity,

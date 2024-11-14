@@ -20,7 +20,6 @@ class GeneralDialog extends StatelessWidget {
       Animation<double> animation,
       Animation<double> secondaryAnimation,
       Widget child) {
-
     final opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animation,
@@ -66,43 +65,42 @@ class GeneralDialog extends StatelessWidget {
         height: height,
         width: Responsive.width(339),
         // padding: const EdgeInsets.all(8),
-        child: IntrinsicHeight(
-          child: Stack(
-            children: [
-              BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        gradientStartColor.withOpacity(0.5),
-                        gradientEndColor.withOpacity(0.5),
-                      ],
-                      begin: const Alignment(0, -1.25),
-                      end: const Alignment(0.0545, 1.5),
-                    ),
+        child: Stack(
+          children: [
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      gradientStartColor.withOpacity(0.5),
+                      gradientEndColor.withOpacity(0.5),
+                    ],
+                    begin: const Alignment(0, -1.25),
+                    end: const Alignment(0.0545, 1.5),
                   ),
-                  child: child,
                 ),
+                child: child,
               ),
-              ClipPath(
-                clipper: RRectStrokeClipper(borderRadius: 20, strokeWidth: 4),
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [
-                          strokeGradientStartColor.withOpacity(0.2),
-                          strokeGradientEndColor.withOpacity(0.2),
-                        ],
-                        begin: const Alignment(-1, -1),
-                        end: const Alignment(0.166, 1.375)),
-                  ),
-                  child: const SizedBox.expand(),
+            ),
+            ClipPath(
+              clipper: RRectStrokeClipper(borderRadius: 20, strokeWidth: 4),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [
+                        strokeGradientStartColor.withOpacity(0.2),
+                        strokeGradientEndColor.withOpacity(0.2),
+                      ],
+                      begin: const Alignment(-1, -1),
+                      end: const Alignment(0.166, 1.375)),
                 ),
-              )
-            ],
-          ),
+                child: child,
+              ),
+            )
+          ],
         ),
       ),
     );

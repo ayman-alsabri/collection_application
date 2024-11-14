@@ -17,7 +17,7 @@ class FoodSheetController extends GetxController {
   String _protinePer100g = '';
   String _carbPer100g = '';
   String _fatPer100g = '';
-  String _notes = '';
+  String _notes = 'لا شيء';
 
   final currentFormIndex = 0.obs;
 
@@ -36,11 +36,10 @@ class FoodSheetController extends GetxController {
         protine: double.parse(_protinePer100g),
         carbs: double.parse(_carbPer100g),
         fat: double.parse(_fatPer100g),
-        category: _notes,
+        category: _notes =='لا شيء'?null:_notes,
         isMine: true,
         units: _units));
     WaitingDialog.hide();
-    // TODO: handle error with custom error class
     if (!successful) {
       showCustomSnackBar('لا يوجد اتصال بالانترنت',
           "الرجاء الاتصال بالانترنت والمحاولة لاحقاَ");
@@ -63,7 +62,7 @@ class FoodSheetController extends GetxController {
     _protinePer100g = protine?.trim() ?? _protinePer100g;
     _carbPer100g = carb?.trim() ?? _carbPer100g;
     _fatPer100g = fat?.trim() ?? _fatPer100g;
-    _notes = notes?.trim() ?? _notes;
+    _notes = notes??_notes;
   }
 
   // void setBarcodeValues({String? barCode, String? weight}) {

@@ -73,7 +73,7 @@ mixin Validate {
           'لايمكن ترك اسم المستخدم فارغاً', "يرجى كتابة اسم المستخدم أولاً");
       return false;
     }
-    if (userName.length < 4) {
+    if (userName.length < 3) {
       showCustomSnackBar(
           'اسم المستخدم قصير', "يرجى كتابة اسم المستخدم بشكل أطول");
       return false;

@@ -7,20 +7,21 @@ class PrimaryWhiteButton extends StatelessWidget {
   final double width;
   final double height;
   final Widget child;
-  const PrimaryWhiteButton({
-    super.key,
-    this.onPressed,
-    required this.height,
-    required this.width,
-    required this.child,
-  });
+  final double opacity;
+  const PrimaryWhiteButton(
+      {super.key,
+      this.onPressed,
+      required this.height,
+      required this.width,
+      required this.child,
+      this.opacity = 1});
 
   @override
   Widget build(BuildContext context) {
     return GeneralButton(
       height: height,
       width: width,
-      colors: [emailButtonColor, emailButtonColor],
+      colors: [emailButtonColor.withOpacity(opacity), emailButtonColor.withOpacity(opacity)],
       onPressed: onPressed,
       child: child,
     );

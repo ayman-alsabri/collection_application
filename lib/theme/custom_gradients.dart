@@ -5,7 +5,7 @@ const Color gradientEndColor = Color(0xFF222834);
 const Color bottomGradientStartColor = Color(0xFF242C3B);
 const Color bluegradientStartColor = Color(0xFF34C8E8);
 const Color bluegradientEndColor = Color(0xFF4E4AF2);
-final Color bottomGradientEndColor = Color(0xFF222834);
+const Color bottomGradientEndColor = Color(0xFF222834);
 const Color strokeGradientStartColor = Colors.white;
 const Color strokeGradientEndColor = Colors.black;
 const Color shadowColor = Color(0xFF10141C);
@@ -24,3 +24,12 @@ final Color emailButtonColor = Colors.white.withOpacity(0.9);
 
 const Color searchBarTopShadow = Color(0xFF11161E);
 const Color searchBarBottomShadow = Color(0xFF2B3545);
+
+const List<Color> caloriesNutritionChartGradiant = [
+  Color(0xFF4C5770),
+  Color(0xFF363E51),
+];
+const List<Color> strokeGradient = [
+strokeGradientStartColor,
+  strokeGradientEndColor,
+];

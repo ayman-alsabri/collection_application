@@ -1,9 +1,10 @@
+import 'package:collection_application/app/data/messaging/firebase_messaging_controller.dart';
+import 'package:collection_application/app/data/messaging/notification_helper.dart';
 import 'package:collection_application/app/globalControllers/dataController/data_controller.dart';
 import 'package:collection_application/app/views/auth/authScreen/authscreen_view.dart';
 import 'package:collection_application/app/views/home/home_screen_view.dart';
 import 'package:collection_application/theme/app_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,19 +12,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  await dotenv.load();
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   WidgetsFlutterBinding.ensureInitialized();
-  final apiKey = dotenv.env['API_KEY'];
-  final appId = dotenv.env['APP_ID'];
-  await Firebase.initializeApp(
-      options: FirebaseOptions(
-          apiKey: apiKey!,
-          appId: appId!,
-          messagingSenderId: "359449937248",
-          projectId: "data-collection-97956"));
-
+  await NotificationHelper().setupNotification();
+  await initFirebase();
   runApp(const MyApp());
 }
 
@@ -32,11 +27,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(FirebaseMessagingController());
     Get.put(DataController());
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Word App',
+      title: 'تجميع البيانات',
       theme: AppTheme.appTheme,
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),

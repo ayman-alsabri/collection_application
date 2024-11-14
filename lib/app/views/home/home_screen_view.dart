@@ -1,9 +1,10 @@
+import 'package:collection_application/app/globalControllers/dataController/data_controller.dart';
+import 'package:collection_application/app/globalControllers/responsive.dart';
 import 'package:collection_application/app/views/home/bottomSheet/bottom_sheet_view.dart';
-import 'package:collection_application/app/views/home/caloriesButtomSection/calories_buttom_container.dart';
+import 'package:collection_application/app/views/home/caloriesButtomSection/calories_buttom_container_view.dart';
+import 'package:collection_application/app/views/home/drawer/my_drawer.dart';
 import 'package:collection_application/app/views/home/widgets/custom_floating_action_button.dart';
 import 'package:collection_application/custom/appBar/custom_app_bar.dart';
-import 'package:collection_application/custom/button/blue_sqare_button.dart';
-import 'package:collection_application/custom/button/completeButtons/custom_search_bar.dart';
 import 'package:collection_application/custom/button/grey_sqare_button.dart';
 import 'package:collection_application/custom/topSwipers/threeSwipers/three_swipers.dart';
 import 'package:collection_application/custom/topSwipers/threeSwipers/three_swipers_controllers.dart';
@@ -14,24 +15,35 @@ import 'package:get/get.dart';
 class HomeScreenView extends StatelessWidget {
   const HomeScreenView({super.key});
 
-  // TODO: Edit the elevated button to make the color blending
 
   @override
   Widget build(BuildContext context) {
+    Responsive.init(context);
     Get.put(ThreeSwipersControllers());
-    return const HomeScreenTemplate(
-      floatingActionButton: CustomFloatingActionButton(
+    Get.put(DataController());
+
+    return HomeScreenTemplate(
+      appBar: CustomAppbar(
+        actionButtom: Builder(builder: (context) {
+          return GreySqareButton(
+            iconName: 'sideBar.png',
+            padding: 12,
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          );
+        }),
+        title: 'تجميع البيانات',
+        // leadingButtom: const BlueSqareButton(
+        //   iconName: 'filter.png',
+        //   padding: 12,
+        // ),
+      ),
+      floatingActionButton: const CustomFloatingActionButton(
         bottomSheet: BottomSheetView(),
       ),
-      appBar: CustomAppbar(
-        actionButtom: GreySqareButton(iconName: 'sideBar.png', padding: 12),
-        title: 'تجميع البيانات',
-        leadingButtom: BlueSqareButton(iconName: 'filter.png', padding: 12),
-      ),
-      body: Column(
+      drawer: const MyDrawer(),
+      body: const Column(
         children: [
           ThreeSwipers(),
-          CustomSearchBar(),
           Expanded(child: CaloriesButtomContainer()),
         ],
       ),

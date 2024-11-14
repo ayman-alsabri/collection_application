@@ -24,6 +24,7 @@ class InputTextField extends StatelessWidget {
     return Container(
       height: Responsive.height(62),
       width: double.maxFinite,
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: shadowColor.withOpacity(0.3),
@@ -39,12 +40,12 @@ class InputTextField extends StatelessWidget {
           ),
           Expanded(
             child: TextField(
+              keyboardType: numeric ? TextInputType.number : TextInputType.name,
               controller: TextEditingController(text: initalValue),
               canRequestFocus: canRequestFocus,
               textInputAction: TextInputAction.next,
               onChanged: onChanged,
               onTapOutside: (p) => Get.focusScope?.unfocus(),
-              keyboardType: numeric ? TextInputType.number : TextInputType.name,
               inputFormatters: numeric
                   ? ([
                       FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),

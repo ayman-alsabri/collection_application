@@ -21,10 +21,23 @@ class TextIconPressButton extends StatelessWidget {
     return Container(
       width: Responsive.width(width),
       height: Responsive.height(30),
-      padding: const EdgeInsets.only(bottom: 3, left: 8, right: 3, top: 3),
+      padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: bottomGradientStartColor.withOpacity(0.7)),
+          color: bottomGradientStartColor.withOpacity(0.7),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.white12,
+              offset: Offset(1, 1),
+              blurRadius: 0.4,
+            ),
+            BoxShadow(color: cravedButtonTopShadow),
+            BoxShadow(
+                color: cravedButtonColor,
+                offset: Offset(2, 2),
+                spreadRadius: -2,
+                blurRadius: 2),
+          ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -41,6 +54,7 @@ class TextIconPressButton extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(width: 3),
           BlueSqareButton(
             shadows: null,
             buttonSize: 24,

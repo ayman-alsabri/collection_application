@@ -1,4 +1,5 @@
 import 'package:collection_application/app/globalControllers/responsive.dart';
+import 'package:collection_application/app/views/home/bottomSheet/components/food/widgets/food_units_adder.dart';
 import 'package:collection_application/app/views/home/bottomSheet/widgets/input_text_field.dart';
 import 'package:collection_application/custom/button/primary_blue_button.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,8 @@ class ProductsBarcodeForm extends StatelessWidget {
               onChanged: (p0) => onValueChanges(weight: p0),
               hintText: 'الوزن بالجرام',
             ),
+            const SizedBox(height: 8),
+            const FoodUnitsAdder(),
             const SizedBox(height: 24),
             Align(
               alignment: Alignment.center,

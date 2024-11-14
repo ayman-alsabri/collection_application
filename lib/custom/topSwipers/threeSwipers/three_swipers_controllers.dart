@@ -4,15 +4,15 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
 enum Containers {
-  first,
-  second,
-  third,
+  meals,
+  products,
+  foods,
 }
 
 class ThreeSwipersControllers extends GetxController with ThreeSwipersMixin {
-  static const duration = Duration(milliseconds: 300);
+  static const duration = Duration(milliseconds: 220);
 
-  final focusedIndex = Containers.second.obs;
+  final focusedIndex = Containers.products.obs;
   final isAnimating = false.obs;
 
 
@@ -28,11 +28,11 @@ class ThreeSwipersControllers extends GetxController with ThreeSwipersMixin {
 
   List<Effect> getEffect(Containers targetedContainer) {
     switch (targetedContainer) {
-      case Containers.first:
+      case Containers.meals:
         return firstEffects;
-      case Containers.second:
+      case Containers.products:
         return secondEffects;
-      case Containers.third:
+      case Containers.foods:
         return thirdEffects;
       default:
         return [];
@@ -41,11 +41,11 @@ class ThreeSwipersControllers extends GetxController with ThreeSwipersMixin {
 
   Alignment getAlignment(Containers targetedContainer) {
     switch (targetedContainer) {
-      case Containers.first:
+      case Containers.meals:
         return firstAlignment;
-      case Containers.second:
+      case Containers.products:
         return secondAlignment;
-      case Containers.third:
+      case Containers.foods:
         return thirdAlignment;
       default:
         return const Alignment(0, 0);

@@ -18,16 +18,16 @@ class ThreeSwipers extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           SwiperContainer(
-            index: Containers.first,
+            index: Containers.meals,
             iconName: 'meals.png',
             name: 'وجبات',
           ),
           SwiperContainer(
-              index: Containers.second,
+              index: Containers.products,
               iconName: 'grocery.png',
               name: 'منتجات'),
           SwiperContainer(
-              index: Containers.third, iconName: 'food.png', name: 'طعام'),
+              index: Containers.foods, iconName: 'food.png', name: 'طعام'),
         ],
       ),
     );

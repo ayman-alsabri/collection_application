@@ -14,11 +14,11 @@ class BottomSheetView extends StatelessWidget {
     return Obx(
       () {
         switch (controller.focusedIndex.value) {
-          case Containers.first:
+          case Containers.meals:
             return const MealsBottomSheet();
-          case Containers.second:
+          case Containers.products:
             return const ProductsBottomSheet();
-          case Containers.third:
+          case Containers.foods:
             return const FoodBottomSheet();
         }
       },

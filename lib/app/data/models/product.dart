@@ -18,8 +18,8 @@ final class Product extends Food {
     required this.barCode,
   });
 
-  Product.fromJson(super.food, super.units, Map<String, dynamic> product)
-      : barCode = product[_barcode],
+  Product.fromJson(super.food, super.units, String barCode)
+      : barCode = _barcode,
         super.fromJson();
 
   Product.fromFood(super.food, String barcode)

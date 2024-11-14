@@ -28,13 +28,17 @@ class FoodUnitsAdderController extends GetxController {
           _rawUnits.removeAt(itemIndex);
           units.removeAt(itemIndex);
         },
-        onChanged: (name, calories) {
-          _rawUnits.last['name'] = name ?? _rawUnits.last['name']!;
-          _rawUnits.last['calories'] = calories ?? _rawUnits.last['calories']!;
+        onChanged: (name, calories, key) {
+          final itemIndex = units.indexWhere(
+            (element) => element.key == key,
+          );
+
+          _rawUnits[itemIndex]['name'] = name ?? _rawUnits[itemIndex]['name']!;
+          _rawUnits[itemIndex]['calories'] =
+              calories ?? _rawUnits[itemIndex]['calories']!;
         },
       ),
     );
-    print(_rawUnits);
   }
 
   bool _validate(List<Map<String, String>> rawUnits) {

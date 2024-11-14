@@ -49,7 +49,7 @@ class SwiperContainer extends StatelessWidget {
                 : () async {
                     if (isFocused) return;
                     await swiperController.onTap();
-                    await Future.delayed(ThreeSwipersControllers.duration);
+                    await Future.delayed(Duration(milliseconds: ThreeSwipersControllers.duration.inMilliseconds -120));
                     return controller.onTap(index);
                   },
             child: AnimatedContainer(

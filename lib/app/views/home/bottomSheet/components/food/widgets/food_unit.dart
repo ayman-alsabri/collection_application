@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class FoodUnit extends StatelessWidget {
   final String initalValue;
-  final void Function(String? name, String? calories) onChanged;
+  final void Function(String? name, String? calories, Key key) onChanged;
   final void Function(Key key) onDismissed;
 
   const FoodUnit({
@@ -17,20 +17,19 @@ class FoodUnit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-     
       direction: DismissDirection.endToStart,
       key: key!,
       onDismissed: (direction) => onDismissed(key!),
       child: Column(
         children: [
           NameTextField(
-            onChanged: (p0) => onChanged(p0, null),
+            onChanged: (p0) => onChanged(p0, null, key!),
             initalValue: initalValue,
           ),
           const SizedBox(height: 8),
           InputTextField(
             // canRequestFocus: canRequestFocus,
-            onChanged: (p0) => onChanged(null, p0),
+            onChanged: (p0) => onChanged(null, p0, key!),
             //  (p0) => trueonValueChanges(barCode: p0),
             hintText: 'السعرات',
           ),

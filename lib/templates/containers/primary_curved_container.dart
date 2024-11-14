@@ -37,7 +37,7 @@ class PrimaryCurvedContainer extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      // TODO: adjust the alignment according to the logo
+                      // TODOn: adjust the alignment according to the logo
                       begin: const Alignment(0.45, 0.35),
                       end: const Alignment(0.55, 0.9),
                       colors: [

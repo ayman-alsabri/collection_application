@@ -1,17 +1,7 @@
 import 'package:collection_application/app/data/models/food.dart';
 
-const _mealId = 'id';
-const _name = 'foodName';
-const _caloriesPer100g = 'caloriesPer100g';
-const _protinePer100g = 'protine';
-const _carbPer100g = 'carb';
-const _fatPer100g = 'fat';
-const _foodCategory = 'category';
-const _isMine = 'isMine';
-
 const _foodId = 'foodId';
-const _unitId = 'unitId';
-const _quantity = 'quantity';
+const _weight = 'weight';
 
 final class Meal extends Food {
   List<Ingrediant> ingrediants;
@@ -35,20 +25,28 @@ final class Meal extends Food {
             )
             .toList(),
         super.fromJson();
+
+  Meal.fromFood(super.food, List<Ingrediant> newIngrediants)
+      : ingrediants = newIngrediants,
+        super.fromFood();
 }
 
 class Ingrediant {
   final int foodId;
-  int unitId;
-  double quantity;
+  double weight;
 
   Ingrediant({
     required this.foodId,
-    required this.unitId,
-    required this.quantity,
+    required this.weight,
   });
   Ingrediant.fromJson(Map<String, dynamic> ingrediant)
       : foodId = ingrediant[_foodId],
-        unitId = ingrediant[_unitId],
-        quantity = ingrediant[_quantity];
+        weight = (ingrediant[_weight]as num).toDouble();
+
+  bool existsBetween(List<Ingrediant> ingrediants) {
+    for (var ing in ingrediants) {
+      if (ing.foodId == foodId) return true;
+    }
+    return false;
+  }
 }

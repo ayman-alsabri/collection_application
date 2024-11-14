@@ -4,19 +4,24 @@ import 'package:flutter/material.dart';
 class HomeScreenTemplate extends StatelessWidget {
   final Widget body;
   final Widget? floatingActionButton;
+  final Widget? drawer;
   final PreferredSizeWidget? appBar;
   const HomeScreenTemplate({
     super.key,
     required this.body,
     this.floatingActionButton,
+    this.drawer,
     this.appBar,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawerScrimColor: Colors.transparent,
+      drawerEnableOpenDragGesture: false,
+      drawer: drawer,
       floatingActionButton: floatingActionButton,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       resizeToAvoidBottomInset: false,
       appBar: appBar,
       body: Stack(

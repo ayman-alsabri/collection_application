@@ -42,7 +42,7 @@ mixin ThreeSwipersMixin {
   int defineMovement(Containers tappedContaner) {
     final int movement;
     switch (tappedContaner) {
-      case Containers.first:
+      case Containers.meals:
         movement = (1 -
             _alignments.indexWhere(
               (element) =>
@@ -50,7 +50,7 @@ mixin ThreeSwipersMixin {
                   element.y == firstAlignment.y,
             ));
         break;
-      case Containers.second:
+      case Containers.products:
         movement = (1 -
             _alignments.indexWhere(
               (element) =>
@@ -58,7 +58,7 @@ mixin ThreeSwipersMixin {
                   element.y == secondAlignment.y,
             ));
         break;
-      case Containers.third:
+      case Containers.foods:
         movement = (1 -
             _alignments.indexWhere(
               (element) =>

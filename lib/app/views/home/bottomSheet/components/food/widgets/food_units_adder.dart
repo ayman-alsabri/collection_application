@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FoodUnitsAdder extends StatelessWidget {
-  const FoodUnitsAdder({
-    super.key,
-  });
+  final double opacity;
+  const FoodUnitsAdder({super.key, this.opacity = 1});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +17,7 @@ class FoodUnitsAdder extends StatelessWidget {
             ...controller.units,
             const SizedBox(height: 8),
             PrimaryWhiteButton(
+                opacity: opacity,
                 onPressed: controller.addUnit,
                 height: 50,
                 width: Responsive.deviseWidth - 32,
@@ -25,7 +25,9 @@ class FoodUnitsAdder extends StatelessWidget {
                   'اضافة وحدة',
                   style: TextStyle(
                     fontFamily: 'TITR',
-                    color: AppTheme.appTheme.colorScheme.secondary,
+                    color: opacity < 0.5
+                        ? AppTheme.appTheme.colorScheme.onSecondary
+                        : AppTheme.appTheme.colorScheme.secondary,
                     fontSize: Responsive.width(28),
                   ),
                 ))

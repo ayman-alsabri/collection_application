@@ -8,7 +8,7 @@ class DialogWithConfirmationOnly extends StatelessWidget {
   final String subtitle;
 
   final String confirmText;
-  final void Function()? onConfirmed;
+  final Future<void> Function()? onConfirmed;
   final String cancelText;
   final void Function()? onCanceled;
 
@@ -38,11 +38,11 @@ class DialogWithConfirmationOnly extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             subtitle,
-            style: TextStyle(
-                fontFamily: 'TITR', fontSize: Responsive.width(20)),
+            style:
+                TextStyle(fontFamily: 'TITR', fontSize: Responsive.width(20)),
           ),
           const SizedBox(height: 24),
-           Padding(
+          Padding(
             padding: const EdgeInsets.all(16),
             child: ConfirmationButtons(
               confirmText: confirmText,

@@ -31,19 +31,24 @@ class PrimaryBlueButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GeneralButton(
+      shadows: shadows,
       height: height,
       width: width,
+      strokeOpacity: backgroundOpacity * 0.2,
       colors: [
         bluegradientStartColor.withOpacity(backgroundOpacity),
         bluegradientEndColor.withOpacity(backgroundOpacity),
       ],
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: TextStyle(
-          fontFamily: 'TITR',
-          color: AppTheme.appTheme.colorScheme.onPrimary,
-          fontSize: Responsive.height(28),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'TITR',
+            color: AppTheme.appTheme.colorScheme.onPrimary,
+            fontSize: Responsive.height(28),
+          ),
         ),
       ),
     );

@@ -1,3 +1,5 @@
+import 'package:collection_application/app/data/firestore/firestore_helper.dart';
+import 'package:collection_application/app/data/stored/databases/database_helper.dart';
 import 'package:collection_application/app/views/auth/signup/components/signup_first_top.dart';
 import 'package:collection_application/custom/dialog/dialog_with_confirmation_only.dart';
 import 'package:collection_application/templates/dialog/general_dialog.dart';
@@ -63,7 +65,7 @@ class SignupScreenController extends GetxController with Validate {
           DialogWithConfirmationOnly(
         confirmText: "موافق",
         cancelText: "تعديل",
-        onConfirmed: () => Get.back(result: true),
+        onConfirmed: () async => Get.back(result: true),
         onCanceled: () => Get.back(result: false),
         title: 'هل انت متأكد من الإيميل',
         subtitle: email,
@@ -86,7 +88,7 @@ class SignupScreenController extends GetxController with Validate {
           DialogWithConfirmationOnly(
         confirmText: "نعم",
         cancelText: "لا",
-        onConfirmed: () => Get.back(result: true),
+        onConfirmed: () async => Get.back(result: true),
         onCanceled: () => Get.back(result: false),
         title: 'هل تريد التراجع',
       ),
@@ -124,10 +126,17 @@ class SignupScreenController extends GetxController with Validate {
     if (signupResult) {
       showSecondContainers.value = false;
       await Future.delayed(const Duration(milliseconds: 150));
+      WaitingDialog.hide();
+      WaitingDialog.show('جار تحميل البيانات');
+      await DatabaseHelper().storeFoods(await FirestoreHelper().getFoods());
+      await DatabaseHelper().storeUnits(await FirestoreHelper().getUnits());
+      await DatabaseHelper().storeIngrediants(await FirestoreHelper().getIngrediants());
+      await DatabaseHelper()
+          .storeProducts(await FirestoreHelper().getProducts());
+      WaitingDialog.hide();
       Get.back(canPop: true, closeOverlays: true);
       return;
     }
-    WaitingDialog.hide();
     signingUp.value = false;
   }
 }

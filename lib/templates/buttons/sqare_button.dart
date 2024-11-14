@@ -9,6 +9,7 @@ class SqareButton extends StatefulWidget {
   final double strokeOpacity;
   final double borderRadius;
   final Size buttonSize;
+  final Duration animationDuration;
   final Widget? child;
   final void Function()? onPressed;
 
@@ -20,6 +21,7 @@ class SqareButton extends StatefulWidget {
     required this.strokeOpacity,
     required this.onPressed,
     required this.shadows,
+    required this.animationDuration,
     this.child,
   });
 
@@ -32,7 +34,7 @@ class _SqareButtonState extends State<SqareButton> {
   late final _buttonWidth = widget.buttonSize.width;
 
   bool _animateTap = false;
-  final _animationDuration = const Duration(milliseconds: 150);
+  late final _animationDuration = widget.animationDuration;
 
   void handleTap() async {
     setState(() {

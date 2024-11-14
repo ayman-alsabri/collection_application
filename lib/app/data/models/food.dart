@@ -36,7 +36,7 @@ base class Food {
       : id = food[_foodId],
         name = food[_name],
         caloriePer100g = food[_caloriesPer100g],
-        isMine = food[_isMine],
+        isMine = food[_isMine]==1,
         protine = food[_protinePer100g],
         fat = food[_fatPer100g],
         carbs = food[_carbPer100g],
@@ -57,4 +57,6 @@ base class Food {
         carbs = food.carbs,
         category = food.category,
         units = food.units;
+
+
 }
