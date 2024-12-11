@@ -1,8 +1,11 @@
 import 'package:collection_application/app/globalControllers/responsive.dart';
+import 'package:collection_application/custom/dialog/dialog_with_confirmation_only.dart';
 import 'package:collection_application/helpers/r_rect_stroke_clipper.dart';
+import 'package:collection_application/templates/dialog/general_dialog.dart';
 import 'package:collection_application/theme/custom_gradients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
 
 class GeneralBottomSheet extends StatefulWidget {
   final String firstButtonName;
@@ -25,8 +28,9 @@ class GeneralBottomSheet extends StatefulWidget {
 }
 
 class _GeneralBottomSheetState extends State<GeneralBottomSheet> {
-  final _animationDuration = 250.milliseconds;
+  final _animationDuration = const Duration(milliseconds: 250);
   bool _animate = false;
+  bool _canPop = false;
   int _focusedIndex = 0;
 
   Future<void> _onTap(int index) async {
@@ -51,82 +55,117 @@ class _GeneralBottomSheetState extends State<GeneralBottomSheet> {
     });
   }
 
+  Future<void> _handlePopRequest() async {
+    final result = await showGeneralDialog<bool>(
+      useRootNavigator: true,
+      context: context,
+      transitionBuilder: GeneralDialog.transitionBuilder,
+      transitionDuration: GeneralDialog.transitionDuration,
+      pageBuilder: (ctx, animation, secondaryAnimation) =>
+          DialogWithConfirmationOnly(
+        title: 'هل تريد الخروج',
+        cancelText: "لا",
+        confirmText: "نعم",
+        onConfirmed: () async =>
+            Navigator.of(ctx, rootNavigator: true).pop(true),
+        onCanceled: () async =>
+            Navigator.of(ctx, rootNavigator: true).pop(false),
+      ),
+    );
+    if (!mounted) return;
+
+    if (result ?? false) {
+      setState(() {
+        _canPop = true;
+      });
+
+     WidgetsBinding.instance.addPostFrameCallback((timeStamp) =>  Navigator.of(context).pop(),);
+      return;
+    }
+    // Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Responsive.height(450),
-      child: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-              gradient: LinearGradient(
-                colors: [
-                  gradientStartColor,
-                  gradientEndColor,
-                ],
-                begin: Alignment(-0.63, -1.09),
-                end: Alignment(0, 0.191),
-              ),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black26,
-                    offset: Offset(0, -20),
-                    blurRadius: 40)
-              ],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _createButton(widget.firstButtonName, 0),
-                      _createButton(widget.secondButtonName, 1),
-                    ],
-                  ),
+    return PopScope(
+      canPop: _canPop,
+      onPopInvokedWithResult:
+          _canPop ? null : (didPop, result) => _handlePopRequest(),
+      child: SizedBox(
+        height: Responsive.height(450),
+        child: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
                 ),
-                Expanded(
-                  child: Stack(
-                    children: [
-                      widget.firstField
-                          .animate(target: _focusedIndex == 0 ? 1 : 0)
-                          .moveX(
-                              curve: Curves.easeInOut,
-                              begin: Responsive.deviseWidth,
-                              end: 0,
-                              duration: _animationDuration),
-                      widget.secondField
-                          .animate(target: _focusedIndex == 1 ? 1 : 0)
-                          .moveX(
-                              curve: Curves.easeInOut,
-                              begin: -Responsive.deviseWidth,
-                              end: 0,
-                              duration: _animationDuration),
-                    ],
+                gradient: LinearGradient(
+                  colors: [
+                    gradientStartColor,
+                    gradientEndColor,
+                  ],
+                  begin: Alignment(-0.63, -1.09),
+                  end: Alignment(0, 0.191),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, -20),
+                      blurRadius: 40)
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _createButton(widget.firstButtonName, 0),
+                        _createButton(widget.secondButtonName, 1),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        widget.firstField
+                            .animate(target: _focusedIndex == 0 ? 1 : 0)
+                            .moveX(
+                                curve: Curves.easeInOut,
+                                begin: Responsive.deviseWidth,
+                                end: 0,
+                                duration: _animationDuration),
+                        widget.secondField
+                            .animate(target: _focusedIndex == 1 ? 1 : 0)
+                            .moveX(
+                                curve: Curves.easeInOut,
+                                begin: -Responsive.deviseWidth,
+                                end: 0,
+                                duration: _animationDuration),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          ClipPath(
-            clipper: RRectStrokeClipper(borderRadius: 30, strokeWidth: 4),
-            child: Container(
-              width: double.maxFinite,
-              height: Responsive.height(100),
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                strokeGradientStartColor.withOpacity(0.1),
-                Colors.transparent
-              ], begin: const Alignment(0, -1), end: const Alignment(0, 1))),
-            ),
-          )
-        ],
+            ClipPath(
+              clipper: RRectStrokeClipper(borderRadius: 30, strokeWidth: 4),
+              child: Container(
+                width: double.maxFinite,
+                height: Responsive.height(100),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                  strokeGradientStartColor.withOpacity(0.1),
+                  Colors.transparent
+                ], begin: const Alignment(0, -1), end: const Alignment(0, 1))),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

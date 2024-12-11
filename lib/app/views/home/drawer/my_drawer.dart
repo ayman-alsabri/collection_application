@@ -26,7 +26,8 @@ class MyDrawer extends StatelessWidget {
               end: const Alignment(0.25, 2.25),
             ),
           ),
-          child: const Material(color: Colors.transparent,
+          child: const Material(
+            color: Colors.transparent,
             child: SafeArea(
               child: Column(
                 children: [

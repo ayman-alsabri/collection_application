@@ -20,6 +20,7 @@ class CustomFloatingActionButton extends StatelessWidget {
       padding: 15,
       buttonSize: 55,
       onPressed: () => Get.bottomSheet(
+        enableDrag: false,
         bottomSheet,
         barrierColor: Colors.transparent,
         isScrollControlled: true,

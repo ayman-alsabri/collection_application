@@ -34,11 +34,11 @@ extension FoodListExtension on List<Map<String, dynamic>> {
       final List? unitIds = (product['unitIds'])?.split('/');
       final List? unitNames = (product['unitNames'])?.split('/');
       final List? unitWeights = (product['unitWeights'])?.split('/');
-      for (var i = 0; i > (unitIds ?? []).length; i++) {
+      for (var i = 0; i < (unitIds ?? []).length; i++) {
         units.add({
-          'id': unitIds![i],
+          'id': int.parse(unitIds![i]),
           'name': unitNames![i],
-          'weight': unitWeights![i]
+          'weight': double.parse(unitWeights![i])
         });
       }
       units.addAll([

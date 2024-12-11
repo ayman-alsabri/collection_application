@@ -1,3 +1,7 @@
+/*TODO:
+the units are composed of unitID "id", foodId "foodID" ,but the ingrediants are composed of ingrediantId "foodId" and mealID "id".
+when transfering the database please make sure to create an er diagram with reasonable names and be aware of this 
+*/
 import 'package:collection_application/app/data/models/food.dart';
 import 'package:collection_application/app/data/models/meal.dart';
 import 'package:collection_application/app/data/models/product.dart';

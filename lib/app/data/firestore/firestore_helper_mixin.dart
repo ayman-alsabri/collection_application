@@ -88,9 +88,14 @@ mixin FirestoreHelperMixin {
     String unitWeights = '';
 
     for (var unit in units) {
-      unitIds += unit.id.toString();
-      unitNames += unit.name;
-      unitWeights += unit.weight.toString();
+      unitIds += '/${unit.id}';
+      unitNames += '/${unit.name}';
+      unitWeights += '/${unit.weight}';
+    }
+    if (units.isNotEmpty) {
+      unitIds = unitIds.substring(1);
+      unitNames = unitNames.substring(1);
+      unitWeights = unitWeights.substring(1);
     }
     return {
       'unitIds': unitIds,
@@ -104,13 +109,16 @@ mixin FirestoreHelperMixin {
     String ingrediantsWeights = '';
 
     for (var ingrediant in ingrediants) {
-      ingrediantsIds += ingrediant.foodId.toString();
-      ingrediantsWeights += ingrediant.weight.toString();
+      ingrediantsIds += '/${ingrediant.foodId}';
+      ingrediantsWeights += '/${ingrediant.weight}';
+    }
+    if (ingrediantsIds.isNotEmpty) {
+      ingrediantsIds = ingrediantsIds.substring(1);
+      ingrediantsWeights = ingrediantsWeights.substring(1);
     }
     return {
       'ingrediantIds': ingrediantsIds,
       'ingrediantWeights': ingrediantsWeights,
     };
   }
-
 }

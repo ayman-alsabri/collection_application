@@ -131,11 +131,22 @@ mixin DatabaseHelperMixin {
             '''INSERT INTO ${IngrediantMixin.ingrediantsTableName}($_mealId,$_ingrediantFoodId,$_weight) VALUES''';
         String values = '';
         List<dynamic> args = [];
+        String idsString = '';
+        final ids = [];
+
         for (Ingrediant ing in meal.ingrediants) {
           values += ',(?,?,?)';
           args.addAll([newMeal!.id, ing.foodId, ing.weight]);
+
+          idsString += ',?';
+          ids.add(ing.foodId);
         }
         if (values.isNotEmpty) {
+          idsString = idsString.substring(1);
+          await txn.rawUpdate('''
+                                    UPDATE ${FoodMixin.foodTableName} 
+                                    SET $_isMine = 0
+                                    WHERE id IN ($idsString)''', ids);
           await txn.rawInsert(sqlQuery + values.substring(1), args);
         }
         await addMealPoints(meal.units);
@@ -159,37 +170,36 @@ mixin DatabaseHelperMixin {
   }
 
   Future<Food> _addFoodFromTxn(Food food, Transaction txn, String type) async {
-      final id = await txn.rawInsert('''INSERT INTO ${FoodMixin.foodTableName}
+    final id = await txn.rawInsert('''INSERT INTO ${FoodMixin.foodTableName}
               ($_name,$_foodType,$_foodCategory,$_caloriesPer100g,$_protinePer100g,$_carbPer100g,$_fatPer100g,$_isMine) 
               VALUES (?,?,?,?,?,?,?,?)''', [
-        food.name,
-        type,
-        food.category,
-        food.caloriePer100g,
-        food.protine,
-        food.carbs,
-        food.fat,
-        1
-      ]);
+      food.name,
+      type,
+      food.category,
+      food.caloriePer100g,
+      food.protine,
+      food.carbs,
+      food.fat,
+      1
+    ]);
 
-      final newUnits = <Unit>[];
-      for (Unit unit in food.units) {
-        final newUnitId = await txn.rawInsert(
-            '''INSERT INTO ${FoodMixin.unitTabelName}($_targetFoodId,$_unitName,$_unitWeight) VALUES(?,?,?)''',
-            [id, unit.name, unit.weight]);
-        newUnits.add(Unit(id: newUnitId, name: unit.name, weight: unit.weight));
-      }
+    final newUnits = <Unit>[];
+    for (Unit unit in food.units) {
+      final newUnitId = await txn.rawInsert(
+          '''INSERT INTO ${FoodMixin.unitTabelName}($_targetFoodId,$_unitName,$_unitWeight) VALUES(?,?,?)''',
+          [id, unit.name, unit.weight]);
+      newUnits.add(Unit(id: newUnitId, name: unit.name, weight: unit.weight));
+    }
 
-      return Food(
-          id: id,
-          name: food.name,
-          caloriePer100g: food.caloriePer100g,
-          protine: food.protine,
-          carbs: food.carbs,
-          category:  food.category,
-          fat: food.fat,
-          units: newUnits);
-    
+    return Food(
+        id: id,
+        name: food.name,
+        caloriePer100g: food.caloriePer100g,
+        protine: food.protine,
+        carbs: food.carbs,
+        category: food.category,
+        fat: food.fat,
+        units: newUnits);
   }
 
   Future<void> _addPoints(int points) async {

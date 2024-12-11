@@ -43,11 +43,14 @@ class SignInScreenView extends StatelessWidget {
                     ],
                   ),
                   VerificationCodeContainer(
-                    onChanged: (p0) => controller.verificationCode = p0,
-                     onTap:controller.signingIn.value?null: controller.signingin
-                  ).animate(
-                      effects: controller.secondPageEffects,
-                      target: controller.showSecondContainers.value ? 1 : 0),
+                          onChanged: (p0) => controller.verificationCode = p0,
+                          onTap: controller.signingIn.value
+                              ? null
+                              : controller.signingin)
+                      .animate(
+                          effects: controller.secondPageEffects,
+                          target:
+                              controller.showSecondContainers.value ? 1 : 0),
                 ],
               );
             }),

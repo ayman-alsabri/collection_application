@@ -125,6 +125,7 @@ class SignInScreenController extends GetxController with Validate {
       await DatabaseHelper()
           .storeProducts(await FirestoreHelper().getProducts());
       WaitingDialog.hide();
+      Get.back(canPop: true, closeOverlays: true);
       return;
     }
 

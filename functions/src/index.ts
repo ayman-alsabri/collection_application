@@ -82,6 +82,7 @@ export const addFood = functions.https.onCall(async (request) => {
 
 
         const response = await admin.messaging().send({
+            android: { collapseKey: food.id.toString() },
             topic: 'collection_application',
             data: {
                 title: title.toString(),
@@ -110,7 +111,7 @@ export const deleteFood = functions.https.onCall(async (request) => {
             .where('foodId', "==", foodId)
             .get();
         const ingrediantsSnapshot = await admin.firestore().collection('Ingrediant')
-            .where('foodId', "==", foodId)
+            .where('id', "==", foodId)
             .get();
         const productsSnapshot = await admin.firestore().collection('Product')
             .where('id', "==", foodId)
@@ -133,6 +134,7 @@ export const deleteFood = functions.https.onCall(async (request) => {
         ]);
 
         const response = await admin.messaging().send({
+            android: { collapseKey: foodId.toString() },
             topic: 'collection_application',
             data: {
                 'title': title,

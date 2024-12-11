@@ -74,12 +74,12 @@ Future<void> _handleMessage(RemoteMessage message) async {
 
     switch (food[_foodType]) {
       case 'food':
-        (await DatabaseHelper().database).transaction((txn) async {
+        await (await DatabaseHelper().database).transaction((txn) async {
           await _insertFoodWithUnits(food, foodDataMap, txn);
         });
         break;
       case 'product':
-        (await DatabaseHelper().database).transaction((txn) async {
+        await (await DatabaseHelper().database).transaction((txn) async {
           await _insertFoodWithUnits(food, foodDataMap, txn);
           await txn.rawInsert('''
                                 INSERT INTO ${ProductMixin.productTableName}($_productId,$_barcode)
@@ -88,7 +88,7 @@ Future<void> _handleMessage(RemoteMessage message) async {
         });
         break;
       case 'meal':
-        (await DatabaseHelper().database).transaction((txn) async {
+        await (await DatabaseHelper().database).transaction((txn) async {
           await _insertFoodWithUnits(food, foodDataMap, txn);
 
           final List? ingrediantIds =
@@ -99,6 +99,10 @@ Future<void> _handleMessage(RemoteMessage message) async {
               '''INSERT INTO ${IngrediantMixin.ingrediantsTableName}($_mealId,$_ingrediantFoodId,$_weight) VALUES''';
           String valuesSting = '';
           final values = [];
+          String idsString = '';
+          final ids = [];
+
+          if (foodDataMap['ingrediantIds'].isEmpty) return;
           for (var i = 0; i < (ingrediantIds ?? []).length; i++) {
             valuesSting += ',(?,?,?)';
             values.addAll([
@@ -106,7 +110,15 @@ Future<void> _handleMessage(RemoteMessage message) async {
               int.parse(ingrediantIds![i]),
               double.parse(ingrediantsWeights![i]),
             ]);
+
+            idsString += ',?';
+            ids.add(int.parse(ingrediantIds[i]));
           }
+          idsString = idsString.substring(1);
+          await txn.rawUpdate('''
+                                    UPDATE ${FoodMixin.foodTableName} 
+                                    SET $_isMine = 0
+                                    WHERE id IN ($idsString)''', ids);
           if (valuesSting.isNotEmpty) {
             await txn.rawInsert(sqlString + valuesSting.substring(1), values);
           }
@@ -122,7 +134,7 @@ Future<void> _handleMessage(RemoteMessage message) async {
 
   if (data['senderEmail'] == userEmail) return;
   final foodId = int.parse(data['foodId']);
-  (await DatabaseHelper().database).transaction((txn) async {
+  await (await DatabaseHelper().database).transaction((txn) async {
     txn.rawDelete('''
                       DELETE FROM
                        ${FoodMixin.foodTableName} 
@@ -160,6 +172,7 @@ Future<void> _insertFoodWithUnits(Map<String, dynamic> food,
   final List? unitIds = (foodDataMap['unitIds'])?.split('/');
   final List? unitNames = (foodDataMap['unitNames'])?.split('/');
   final List? unitWeights = (foodDataMap['unitWeights'])?.split('/');
+  if (foodDataMap['unitIds'].isEmpty) return;
   for (var i = 0; i < (unitIds ?? []).length; i++) {
     valuesSting += ',(?,?,?,?)';
     values.addAll([
